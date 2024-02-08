@@ -18,12 +18,11 @@
     .widget p {
       font-style: italic;
     }
-
   </style>
 </head>
 
 <body>
-  <h1>Web Sprint 3 Challenge </h1>
+  <h1>Web Sprint 3 Challenge PB</h1>
   <p>❗ See the last script tag for instructions on completing your Challenge</p>
   <!-- widgets start, do not modify -->
   <section class="widget">
@@ -46,9 +45,9 @@
 
     // 👉 CHALLENGE 1 - Integers
     class Integers {
-      // 🧠 Constructor takes **any** number of arguments, which are integers
+      // > 🧠 Constructor takes **any** number of arguments, which are integers
       // 🧠 Instances have an `ints` property which is an array holding the integers above in the same order
-      // 🧠 Implement a `getAll` method which returns the data held in the `ints` property
+      // > 🧠 Implement a `getAll` method which returns the data held in the `ints` property
       // 🧠 Implement a `getEvens` method which returns an array with the integers that are even
       // 🧠 Implement a `getNegatives` method which returns an array with the integers that negative
       // 🧠 Implement a `getAllSquared` method which returns an array with the integers squared
@@ -58,6 +57,45 @@
       // 🧠 Implement a `getAllReversed` method which returns the ints in reverse order
       // ❗ WARNING: except for `getAllReversed`, methods must respect the order of the integers
       // ❗ WARNING: note that none of the methods actually mutate the `ints` property
+
+      constructor(...argments) {
+        this.ints = argments
+      }
+
+      getAll() {
+        return this.ints
+      }
+
+      getEvens() {
+        return this.ints.filter(int => int % 2 === 0);
+      }
+
+      getNegatives() {
+        return this.ints.filter(int => int < 0);
+      }
+
+      getAllSquared() {
+        return this.ints.map(int => int * int);
+      }
+
+      pop() {
+        return this.ints.pop();
+      }
+
+      push(int) {
+        this.ints.push(int);
+        return this.ints;
+      }
+
+      getEveryNth(n) {
+        return this.ints.filter((_, index) => index % n === 0);
+      }
+
+      getAllReversed() {
+        return [...this.ints].reverse();
+      }
+
+
 
     }
 
