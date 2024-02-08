@@ -114,8 +114,39 @@
       //      * When engaging the safety, return "Safety enabled!"
       //      * When disengaging the safety, return "Safety disabled!"
       // 🌟 HINT: instances need to keep track of their maximum capacity as well as their current capacity
+      constructor(totalProjectiles) {
+        this.totalProjectiles = totalProjectiles;
+        this.currentProjectiles = totalProjectiles;
+        this.safetyOn = true; // Safety is initially on
+      }
 
+      shoot() {
+        if (this.currentProjectiles > 0 && !this.safetyOn) {
+          this.currentProjectiles -= 1;
+          return "Bang!";
+        } else {
+          return "Click!";
+        }
+      }
+
+      reload(number) {
+        if (typeof number !== 'number' || number <= 0) {
+          return "Error reloading!";
+        }
+        this.currentProjectiles += number;
+        if (this.currentProjectiles > this.totalProjectiles) {
+          this.currentProjectiles = this.totalProjectiles;
+        }
+        return `${this.currentProjectiles} projectiles left!`;
+      }
+
+      toggleSafety() {
+        this.safetyOn = !this.safetyOn;
+        return this.safetyOn ? "Safety enabled!" : "Safety disabled!";
+      }
     }
+
+
 
     // 👉 CHALLENGE 3 EBook
     class EBook {
@@ -133,8 +164,26 @@
       //    ebook.next() // returns null
       // 🌟 HINT: remember about the `slice` method which strings and arrays have
       // ❗ Feel free to implement `back`, although this is not required nor graded
+      constructor(text, charsPerPage) {
+        this.text = text;
+        this.charsPerPage = charsPerPage;
+        this.currentPageIndex = 0;
+      }
 
+      next() {
+        if (this.currentPageIndex >= this.text.length) {
+          return null;
+        }
+
+        const start = this.currentPageIndex;
+        const end = start + this.charsPerPage;
+
+        this.currentPageIndex = end;
+
+        return this.text.slice(start, end);
+      }
     }
+
 
     // 👉 CHALLENGE 4 AntFarm
     class AntFarm {
@@ -169,7 +218,40 @@
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
 
+      constructor(...antNames) {
+        this.ants = antNames.map(name => ({ name, health: 100 }));
+      }
+      work() {
+        const startingAnts = this.ants.length; 
+
+        if (startingAnts === 0) {
+          return "No ants here. Did you work them to death?";
+        }
+
+        this.ants.forEach(ant => {
+          ant.health -= 20;
+        });
+
+        this.ants = this.ants.filter(ant => ant.health > 0);
+
+        return `${startingAnts} ants starting work!`; 
+      }
+
+      feed(antName) {
+        let found = false;
+
+        this.ants = this.ants.map(ant => {
+          if (ant.name === antName) {
+            found = true;
+            return { ...ant, health: ant.health + 15 };
+          }
+          return ant;
+        });
+
+        return found ? "Yum!" : `${antName} not found!`;
+      }
     }
+
 
     // 🧪 TESTS, do not make any changes below this line ===================
     // 🧪 TESTS, do not make any changes below this line ===================
